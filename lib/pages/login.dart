@@ -1,4 +1,5 @@
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:jada/domain/user.dart';
 import 'package:jada/providers/auth.dart';
@@ -21,6 +22,16 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
 
+    final title = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Login Page",
+            style: TextStyle(
+                color: Colors.blue,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold)),
+      ],
+    );
     final usernameField = TextFormField(
       autofocus: false,
       validator: validateEmail,
@@ -47,16 +58,14 @@ class _LoginState extends State<Login> {
     final forgotLabel = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FlatButton(
-          padding: EdgeInsets.all(0.0),
+        TextButton(
           child: Text("Forgot password?",
               style: TextStyle(fontWeight: FontWeight.w300)),
           onPressed: () {
 //            Navigator.pushReplacementNamed(context, '/reset-password');
           },
         ),
-        FlatButton(
-          padding: EdgeInsets.only(left: 0.0),
+        TextButton(
           child: Text("Sign up", style: TextStyle(fontWeight: FontWeight.w300)),
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/register');
@@ -96,12 +105,15 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: Container(
           padding: EdgeInsets.all(40.0),
+          margin: const EdgeInsets.only(top: 50.0),
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: 15.0),
+                title,
+                SizedBox(height: 40.0),
                 label("Email"),
                 SizedBox(height: 5.0),
                 usernameField,

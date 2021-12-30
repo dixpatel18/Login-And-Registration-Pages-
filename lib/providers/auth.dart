@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:jada/domain/user.dart';
 import 'package:jada/util/app_url.dart';
 import 'package:jada/util/shared_preference.dart';
-
 
 enum Status {
   NotLoggedIn,
@@ -20,22 +17,17 @@ enum Status {
 }
 
 class AuthProvider with ChangeNotifier {
-
   Status _loggedInStatus = Status.NotLoggedIn;
   Status _registeredInStatus = Status.NotRegistered;
 
   Status get loggedInStatus => _loggedInStatus;
   Status get registeredInStatus => _registeredInStatus;
 
-
   Future<Map<String, dynamic>> login(String email, String password) async {
     var result;
 
     final Map<String, dynamic> loginData = {
-      'user': {
-        'email': email,
-        'password': password
-      }
+      'user': {'email': email, 'password': password}
     };
 
     _loggedInStatus = Status.Authenticating;
@@ -71,8 +63,8 @@ class AuthProvider with ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> register(String email, String password, String passwordConfirmation) async {
-
+  Future<Map<String, dynamic>> register(
+      String email, String password, String passwordConfirmation) async {
     final Map<String, dynamic> registrationData = {
       'user': {
         'email': email,
@@ -81,8 +73,8 @@ class AuthProvider with ChangeNotifier {
       }
     };
     return await post(AppUrl.register,
-        body: json.encode(registrationData),
-        headers: {'Content-Type': 'application/json'})
+            body: json.encode(registrationData),
+            headers: {'Content-Type': 'application/json'})
         .then(onValue)
         .catchError(onError);
   }
@@ -93,7 +85,6 @@ class AuthProvider with ChangeNotifier {
 
     print(response.statusCode);
     if (response.statusCode == 200) {
-
       var userData = responseData['data'];
 
       User authUser = User.fromJson(userData);
@@ -120,5 +111,4 @@ class AuthProvider with ChangeNotifier {
     print("the error is $error.detail");
     return {'status': false, 'message': 'Unsuccessful Request', 'data': error};
   }
-
 }

@@ -7,7 +7,6 @@ import 'package:jada/providers/auth.dart';
 import 'package:jada/providers/user_provider.dart';
 import 'package:jada/util/shared_preference.dart';
 import 'package:provider/provider.dart';
-
 import 'domain/user.dart';
 
 void main() {

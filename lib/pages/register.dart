@@ -1,4 +1,5 @@
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:jada/domain/user.dart';
 import 'package:jada/providers/auth.dart';
@@ -6,6 +7,8 @@ import 'package:jada/providers/user_provider.dart';
 import 'package:jada/util/validators.dart';
 import 'package:jada/util/widgets.dart';
 import 'package:provider/provider.dart';
+
+import 'login.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -20,7 +23,16 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
-
+    final title = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Registration Page",
+            style: TextStyle(
+                color: Colors.blue,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold)),
+      ],
+    );
     final usernameField = TextFormField(
       autofocus: false,
       validator: validateEmail,
@@ -51,6 +63,22 @@ class _RegisterState extends State<Register> {
         Text(" Registering ... Please wait")
       ],
     );
+    final loginpage = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Already have an account?"),
+        TextButton(
+          child:
+              Text("Login Page", style: TextStyle(fontWeight: FontWeight.w300)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Login()),
+            );
+          },
+        ),
+      ],
+    );
 
     var doRegister = () {
       final form = formKey.currentState;
@@ -76,37 +104,39 @@ class _RegisterState extends State<Register> {
           duration: Duration(seconds: 10),
         ).show(context);
       }
-
     };
 
     return SafeArea(
       child: Scaffold(
         body: Container(
-          padding: EdgeInsets.all(40.0),
+          padding: EdgeInsets.all(20.0),
           child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 15.0),
-                label("Email"),
-                SizedBox(height: 5.0),
-                usernameField,
-                SizedBox(height: 15.0),
-                label("Password"),
-                SizedBox(height: 10.0),
-                passwordField,
-                SizedBox(height: 15.0),
-                label("Confirm Password"),
-                SizedBox(height: 10.0),
-                confirmPassword,
-                SizedBox(height: 20.0),
-                auth.loggedInStatus == Status.Authenticating
-                    ? loading
-                    : longButtons("Login", doRegister),
-              ],
-            ),
-          ),
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 15.0),
+                  title,
+                  SizedBox(height: 25.0),
+                  label("Email"),
+                  SizedBox(height: 5.0),
+                  usernameField,
+                  SizedBox(height: 15.0),
+                  label("Password"),
+                  SizedBox(height: 10.0),
+                  passwordField,
+                  SizedBox(height: 15.0),
+                  label("Confirm Password"),
+                  SizedBox(height: 10.0),
+                  confirmPassword,
+                  SizedBox(height: 20.0),
+                  auth.loggedInStatus == Status.Authenticating
+                      ? loading
+                      : longButtons("Login", doRegister),
+                  SizedBox(height: 5.0),
+                  loginpage,
+                ],
+              )),
         ),
       ),
     );
