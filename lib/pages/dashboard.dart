@@ -16,7 +16,7 @@ class _DashBoardState extends State<DashBoard> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("DASHBOARD PAGE"),
+        title: Text("DASHBOARD "),
         elevation: 0.1,
       ),
       body: Column(
