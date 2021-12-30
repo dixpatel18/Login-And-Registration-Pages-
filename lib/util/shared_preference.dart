@@ -6,6 +6,7 @@ class UserPreferences {
   Future<bool> saveUser(User user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    
     prefs.setInt("userId", user.userId);
     prefs.setString("name", user.name);
     prefs.setString("email", user.email);
