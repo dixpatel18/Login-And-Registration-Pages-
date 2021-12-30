@@ -9,6 +9,7 @@ MaterialButton longButtons(String title, Function fun,
     child: SizedBox(
       width: double.infinity,
       child: Text(
+          
         title,
         textAlign: TextAlign.center,
       ),
